@@ -1,0 +1,136 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MDRF v3.0 Metadata Schemas",
+  "description": "JSON Schema definitions for metadata blocks used in MDRF v3.0.",
+  "definitions": {
+    "FrontMatter": {
+      "title": "YAML Front Matter Schema",
+      "type": "object",
+      "properties": {
+        "mdrf_version": {
+          "description": "MDRF version. Must be '3.0' for this version.",
+          "type": "string",
+          "const": "3.0"
+        },
+        "project": {
+          "description": "Name of the project.",
+          "type": "string"
+        },
+        "review_date": {
+          "description": "Date of the review.",
+          "type": "string",
+          "format": "date"
+        },
+        "participants": {
+          "description": "List of participants involved in the review.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "mdrf_version"
+      ],
+      "additionalProperties": true
+    },
+    "GroupMetadata": {
+      "title": "Group Metadata Schema (Optional)",
+      "type": "object",
+      "properties": {
+        "group_type": {
+            "description": "Type of the group (e.g., 'version', 'path', 'feature'). Should match the H2 heading type (lowercase recommended).",
+            "type": "string"
+        },
+        "author": {
+          "description": "Author (e.g., for commit/version group).",
+          "type": "string"
+        },
+        "timestamp": {
+          "description": "Timestamp (e.g., for commit/version group, ISO 8601 format).",
+          "type": "string",
+          "format": "date-time"
+        },
+        "base_commit": {
+          "description": "The base identifier (e.g., commit ID) for comparison (e.g., for version group).",
+          "type": "string"
+        },
+        "related_issue": {
+          "description": "Identifier for related issues.",
+          "type": "string"
+        },
+        "description": {
+            "description": "A brief description of the group.",
+            "type": "string"
+        }
+      },
+      "required": [],
+      "additionalProperties": true
+    },
+    "FileMetadata": {
+      "title": "File Metadata Schema (Optional)",
+      "type": "object",
+      "properties": {
+        "file_path": {
+          "description": "Path of the file. Must match the H3 heading.",
+          "type": "string"
+        },
+        "change_type": {
+          "description": "Type of change (recommended).",
+          "type": "string",
+          "enum": [
+            "added",
+            "modified",
+            "renamed",
+            "moved",
+            "removed"
+          ]
+        },
+        "old_path": {
+          "description": "Previous path of the file if renamed or moved (recommended).",
+          "type": "string"
+        },
+        "old_hash": {
+          "description": "Git hash of the file before changes.",
+          "type": "string"
+        },
+        "new_hash": {
+          "description": "Git hash of the file after changes.",
+          "type": "string"
+        },
+        "file_status": {
+          "description": "Review status specific to this file (custom).",
+          "type": "string"
+        }
+      },
+      "required": [
+        "file_path"
+      ],
+      "additionalProperties": true
+    },
+    "ThreadMetadata": {
+      "title": "Comment Thread Metadata Schema (Optional)",
+      "type": "object",
+      "properties": {
+        "status": {
+          "description": "Current status of the discussion thread. Recommended values: 'open', 'addressed', 'resolved', 'wontfix'.",
+          "type": "string"
+        },
+        "type": {
+          "description": "Type or category of the discussion. Recommended values: 'issue', 'suggestion', 'question', 'nitpick'.",
+          "type": "string"
+        },
+        "context_snippet": {
+          "description": "Code snippet related to the thread (recommended). Can be multi-line.",
+          "type": "string"
+        },
+        "severity": {
+          "description": "Severity level (custom example).",
+          "type": "string"
+        }
+      },
+      "required": [],
+      "additionalProperties": true
+    }
+  }
+}
